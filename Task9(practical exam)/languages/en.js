@@ -1,0 +1,8 @@
+const english = {
+
+    PORT:"SERVER_IS_RUNNING_ON_PORT",
+    SUCCESS:"MONGODB_IS_CONNECTION_SUCCESSFULLY",
+    ERROR:"INTERNAL_SERVER_ERROR"
+
+}
+export default english;
