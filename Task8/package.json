@@ -1,0 +1,27 @@
+{
+  "name": "task8",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "cryptlib": "^1.0.3",
+    "crypto-js": "^4.2.0",
+    "dotenv": "^17.2.2",
+    "express": "^5.1.0",
+    "localizify": "^2.0.0",
+    "mongoose": "^8.18.2",
+    "nodemailer": "^7.0.6",
+    "nodemon": "^3.1.10",
+    "twilio": "^5.9.0",
+    "validatorjs": "^3.22.1"
+  }
+}
