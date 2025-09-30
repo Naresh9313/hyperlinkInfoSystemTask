@@ -1,0 +1,1008 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "My API Documentation",
+    "version": "1.0.0",
+    "description": "API documentation for the project"
+  },
+  "components": {
+    "securitySchemes": {
+      "BearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  },
+  "paths": {
+    "/api/v1/user/signup": {
+      "post": {
+        "tags": ["user"],
+        "summary": "User Signup",
+        "description": "Register a new user with username, email, password, role, and device information",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "username": {
+                    "type": "string",
+                    "example": "nareshprajapati"
+                  },
+                  "email": {
+                    "type": "string",
+                    "format": "email",
+                    "example": "naresh@example.com"
+                  },
+                  "mobileNo": { "type": "string", "example": "9876543210" },
+                  "password": { "type": "string", "example": "1234" },
+                  "role": { "type": "string", "example": "visitor" },
+                  "deviceInfo": {
+                    "type": "object",
+                    "properties": {
+                      "deviceType": { "type": "string", "example": "mobile" },
+                      "os": { "type": "string", "example": "Android 12" },
+                      "browser": { "type": "string", "example": "Chrome" },
+                      "ipAddress": {
+                        "type": "string",
+                        "example": "192.168.1.10"
+                      }
+                    }
+                  }
+                },
+                "required": [
+                  "username",
+                  "email",
+                  "mobileNo",
+                  "password",
+                  "role",
+                  "deviceInfo"
+                ]
+              }
+            },
+            "text/plain": {
+              "schema": {
+                "type": "string",
+                "example": "{\"username\": \"nareshprajapati\", \"email\": \"naresh@example.com\", \"mobileNo\": \"9876543210\", \"password\": \"1234\", \"role\": \"visitor\", \"deviceInfo\": {\"deviceType\": \"mobile\", \"os\": \"Android 12\", \"browser\": \"Chrome\", \"ipAddress\": \"192.168.1.10\"}}"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "User registered successfully" },
+          "400": { "description": "Invalid request or validation error" }
+        }
+      }
+    },
+    "/api/v1/user/login": {
+      "post": {
+        "tags": ["user"],
+        "summary": "User Login",
+        "description": "Login using email, mobile number, and password",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "format": "email",
+                    "example": "naresh@example.com"
+                  },
+                  "mobileNo": {
+                    "type": "string",
+                    "example": "9876543210"
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": "1234"
+                  }
+                },
+                "required": ["email", "mobileNo", "password"]
+              }
+            },
+            "text/plain": {
+              "schema": {
+                "type": "string",
+                "example": "{\"email\": \"naresh@example.com\", \"mobileNo\": \"9876543210\", \"password\": \"1234\"}"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Login successful, returns JWT token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "token": {
+                      "type": "string",
+                      "example": "eyJhbGciOiJIUzI1NiIsInR5cCI..."
+                    },
+                    "user": {
+                      "type": "object",
+                      "properties": {
+                        "username": {
+                          "type": "string",
+                          "example": "nareshprajapati"
+                        },
+                        "email": {
+                          "type": "string",
+                          "example": "naresh@example.com"
+                        },
+                        "mobileNo": {
+                          "type": "string",
+                          "example": "9876543210"
+                        },
+                        "role": {
+                          "type": "string",
+                          "example": "visitor"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid credentials or validation error"
+          }
+        }
+      }
+    },
+    "/api/v1/user/logout": {
+      "post": {
+        "tags": ["user"],
+        "summary": "User Logout",
+        "description": "Logout the user and invalidate the JWT token",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Logout successful"
+          },
+          "401": {
+            "description": "Unauthorized or invalid token"
+          }
+        }
+      }
+    },
+    "/api/v1/user/getProfile": {
+      "get": {
+        "tags": ["user"],
+        "summary": "Get User Profile",
+        "description": "Fetch the logged-in user's profile using the JWT token",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Profile fetched successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "username": {
+                      "type": "string",
+                      "example": "nareshprajapati"
+                    },
+                    "email": {
+                      "type": "string",
+                      "example": "naresh@example.com"
+                    },
+                    "mobileNo": {
+                      "type": "string",
+                      "example": "9876543210"
+                    },
+                    "role": {
+                      "type": "string",
+                      "example": "visitor"
+                    },
+                    "deviceInfo": {
+                      "type": "object",
+                      "properties": {
+                        "deviceType": {
+                          "type": "string",
+                          "example": "mobile"
+                        },
+                        "os": {
+                          "type": "string",
+                          "example": "Android 12"
+                        },
+                        "browser": {
+                          "type": "string",
+                          "example": "Chrome"
+                        },
+                        "ipAddress": {
+                          "type": "string",
+                          "example": "192.168.1.10"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized or invalid token"
+          }
+        }
+      }
+    },
+    "/api/v1/user/updateProfile": {
+      "put": {
+        "tags": ["user"],
+        "summary": "Update User Profile",
+        "description": "Update the logged-in user's profile details using the JWT token",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "username": {
+                    "type": "string",
+                    "example": "nareshprajapati9313"
+                  },
+                  "email": {
+                    "type": "string",
+                    "format": "email",
+                    "example": "naresh@gmail.com"
+                  },
+                  "mobileNo": {
+                    "type": "string",
+                    "example": "9999999999"
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": "123456"
+                  },
+                  "role": {
+                    "type": "string",
+                    "example": "mediaReporter"
+                  }
+                },
+                "required": [
+                  "username",
+                  "email",
+                  "mobileNo",
+                  "password",
+                  "role"
+                ]
+              }
+            },
+            "text/plain": {
+              "schema": {
+                "type": "string",
+                "example": "{\"username\": \"nareshprajapati9313\", \"email\": \"naresh@gmail.com\", \"mobileNo\": \"9999999999\", \"password\": \"123456\", \"role\": \"mediaReporter\"}"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Profile updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "username": {
+                      "type": "string",
+                      "example": "nareshprajapati9313"
+                    },
+                    "email": {
+                      "type": "string",
+                      "example": "naresh@gmail.com"
+                    },
+                    "mobileNo": {
+                      "type": "string",
+                      "example": "9999999999"
+                    },
+                    "role": {
+                      "type": "string",
+                      "example": "mediaReporter"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized or invalid token"
+          },
+          "400": {
+            "description": "Invalid request or validation error"
+          }
+        }
+      }
+    },
+    "/api/v1/user/forgotPassword": {
+      "post": {
+        "tags": ["user"],
+        "summary": "Forgot Password",
+        "description": "Send a password reset email to the user",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "format": "email",
+                    "example": "naresh@example.com"
+                  }
+                },
+                "required": ["email"]
+              }
+            },
+            "text/plain": {
+              "schema": {
+                "type": "string",
+                "example": "{\"email\": \"naresh@example.com\"}"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Password reset email sent successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Password reset email sent to naresh@example.com"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request or email not found"
+          }
+        }
+      }
+    },
+    "/api/v1/user/resetPassword": {
+      "post": {
+        "tags": ["user"],
+        "summary": "Reset Password",
+        "description": "Reset the user's password using the token received via email",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "token": {
+                    "type": "string",
+                    "example": "05dcfa552dc2426022ee3abac2bac29ca1db3ffe"
+                  },
+                  "newPassword": {
+                    "type": "string",
+                    "example": "111111111"
+                  }
+                },
+                "required": ["token", "newPassword"]
+              }
+            },
+            "text/plain": {
+              "schema": {
+                "type": "string",
+                "example": "{\"token\": \"05dcfa552dc2426022ee3abac2bac29ca1db3ffe\", \"newPassword\": \"111111111\"}"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Password reset successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Password has been reset successfully"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token or request body"
+          },
+          "401": {
+            "description": "Unauthorized or token expired"
+          }
+        }
+      }
+    },
+    "/api/v1/user/setUserCity": {
+      "post": {
+        "tags": ["user"],
+        "summary": "Set User City",
+        "description": "Set the user's country, state, and city information using the provided IDs. Requires Bearer Token authorization.",
+        "security": [{ "BearerAuth": [] }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "countryId": {
+                    "type": "string",
+                    "example": "68c39ff1252d30ce9df9f884"
+                  },
+                  "stateId": {
+                    "type": "string",
+                    "example": "68c39ff1252d30ce9df9f887"
+                  },
+                  "cityId": {
+                    "type": "string",
+                    "example": "68c39ff1252d30ce9df9f88b"
+                  }
+                },
+                "required": ["countryId", "stateId", "cityId"]
+              }
+            },
+            "text/plain": {
+              "schema": {
+                "type": "string",
+                "example": "{\"countryId\": \"68c39ff1252d30ce9df9f884\", \"stateId\": \"68c39ff1252d30ce9df9f887\", \"cityId\": \"68c39ff1252d30ce9df9f88b\"}"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User city information updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "User city updated successfully"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": { "description": "Invalid request or validation error" },
+          "401": { "description": "Unauthorized or invalid token" }
+        }
+      }
+    },
+
+    "/api/v1/user/getCities": {
+      "get": {
+        "tags": ["user"],
+        "summary": "Get Cities",
+        "description": "Fetch cities based on pagination, stateIds, and cityIds filters. Authorization required with Bearer Token.",
+        "security": [{ "BearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "example": 1
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "example": 5
+            }
+          },
+          {
+            "name": "stateIds",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "example": "68c39ff1252d30ce9df9f887"
+            }
+          },
+          {
+            "name": "cityIds",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "example": "68c39ff1252d30ce9df9f88b"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of cities fetched successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "cities": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "example": "68c39ff1252d30ce9df9f88b"
+                          },
+                          "name": { "type": "string", "example": "Ahmedabad" }
+                        }
+                      }
+                    },
+                    "page": { "type": "integer", "example": 1 },
+                    "limit": { "type": "integer", "example": 5 },
+                    "total": { "type": "integer", "example": 100 }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized or invalid token"
+          }
+        }
+      }
+    },
+
+    "/api/v1/user/getCategories": {
+      "get": {
+        "tags": ["user"],
+        "summary": "Get Categories",
+        "description": "Fetch all available categories. Requires JWT token.",
+       
+        "responses": {
+          "200": {
+            "description": "Categories fetched successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "categories": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "example": "64f123abc456def7890ghi12"
+                          },
+                          "name": {
+                            "type": "string",
+                            "example": "Technology"
+                          },
+                          "image": {
+                            "type": "string",
+                            "example": "https://example.com/images/tech.png"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized or invalid token"
+          },
+          "400": {
+            "description": "Invalid request"
+          }
+        }
+      }
+    },
+    "/api/v1/news/addNews": {
+      "post": {
+        "tags": ["News"],
+        "summary": "Add News",
+        "description": "Create a news item with title, description, and category. Requires JWT token.",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string",
+                    "example": "hello Update"
+                  },
+                  "description": {
+                    "type": "string",
+                    "example": "Important event happened today in the city..."
+                  },
+                  "category": {
+                    "type": "string",
+                    "example": "General"
+                  }
+                },
+                "required": ["title", "description", "category"]
+              }
+            },
+            "text/plain": {
+              "schema": {
+                "type": "string",
+                "example": "{\"title\": \"hello Update\", \"description\": \"Important event happened today in the city...\", \"category\": \"General\"}"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "News added successfully"
+          },
+          "400": {
+            "description": "Invalid request or validation error"
+          },
+          "401": {
+            "description": "Unauthorized or invalid token"
+          }
+        }
+      }
+    },
+    "/api/v1/news/getNewsList": {
+      "get": {
+        "tags": ["News"],
+        "summary": "Get News List",
+        "description": "Fetch a list of all news items. Requires JWT token.",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "News list fetched successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "news": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "example": "64f123abc456def7890ghi12"
+                          },
+                          "title": {
+                            "type": "string",
+                            "example": "hello Update"
+                          },
+                          "description": {
+                            "type": "string",
+                            "example": "Important event happened today in the city..."
+                          },
+                          "category": {
+                            "type": "string",
+                            "example": "General"
+                          },
+                          "createdAt": {
+                            "type": "string",
+                            "format": "date-time",
+                            "example": "2025-09-12T06:45:00.000Z"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "text/plain": {
+                "schema": {
+                  "type": "string",
+                  "example": "[{\"id\": \"64f123abc456def7890ghi12\", \"title\": \"hello Update\", \"description\": \"Important event happened today in the city...\", \"category\": \"General\", \"createdAt\": \"2025-09-12T06:45:00.000Z\"}]"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized or invalid token"
+          },
+          "400": {
+            "description": "Invalid request"
+          }
+        }
+      }
+    },
+    "/api/v1/news/getSingleNews": {
+      "get": {
+        "tags": ["News"],
+        "summary": "Get Single News",
+        "description": "Fetch a single news item by its ID. Requires JWT token.",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "newsId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "68c29e41b6c45ccb3ef940b6"
+            },
+            "description": "The ID of the news to fetch"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "News fetched successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "example": "68c29e41b6c45ccb3ef940b6"
+                    },
+                    "title": {
+                      "type": "string",
+                      "example": "hello Update"
+                    },
+                    "description": {
+                      "type": "string",
+                      "example": "Important event happened today in the city..."
+                    },
+                    "category": {
+                      "type": "string",
+                      "example": "General"
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "format": "date-time",
+                      "example": "2025-09-12T06:45:00.000Z"
+                    }
+                  }
+                }
+              },
+              "text/plain": {
+                "schema": {
+                  "type": "string",
+                  "example": "{\"id\": \"68c29e41b6c45ccb3ef940b6\", \"title\": \"hello Update\", \"description\": \"Important event happened today in the city...\", \"category\": \"General\", \"createdAt\": \"2025-09-12T06:45:00.000Z\"}"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized or invalid token"
+          },
+          "404": {
+            "description": "News not found"
+          },
+          "400": {
+            "description": "Invalid request"
+          }
+        }
+      }
+    },
+    "/api/v1/news/likeDislike": {
+      "get": {
+        "tags": ["News"],
+        "summary": "Like or Dislike News",
+        "description": "Toggle like or dislike for a news item. Requires JWT token.",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "newsId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "68c29b72c5056f80e9c38d20"
+            },
+            "description": "The ID of the news item to like or dislike"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Like or dislike action performed successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "newsId": {
+                      "type": "string",
+                      "example": "68c29b72c5056f80e9c38d20"
+                    },
+                    "status": {
+                      "type": "string",
+                      "example": "liked"
+                    },
+                    "likesCount": {
+                      "type": "integer",
+                      "example": 10
+                    },
+                    "dislikesCount": {
+                      "type": "integer",
+                      "example": 2
+                    }
+                  }
+                }
+              },
+              "text/plain": {
+                "schema": {
+                  "type": "string",
+                  "example": "{\"newsId\": \"68c29b72c5056f80e9c38d20\", \"status\": \"liked\", \"likesCount\": 10, \"dislikesCount\": 2}"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized or invalid token"
+          },
+          "404": {
+            "description": "News not found"
+          },
+          "400": {
+            "description": "Invalid request"
+          }
+        }
+      }
+    },
+    "/api/v1/news/addComment": {
+      "post": {
+        "tags": ["Comment"],
+        "summary": "Add Comment to News",
+        "description": "Add a comment to a news item using its newsId. Requires JWT token.",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "newsId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "68c2aeccd0921c79b4106e13"
+            },
+            "description": "The ID of the news item to comment on"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "text": {
+                    "type": "string",
+                    "example": "This is a great news article!"
+                  }
+                },
+                "required": ["text"]
+              }
+            },
+            "text/plain": {
+              "schema": {
+                "type": "string",
+                "example": "{\"text\": \"This is a great news article!\"}"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Comment added successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "commentId": {
+                      "type": "string",
+                      "example": "64f8c5b9a9b2f3e2d1234567"
+                    },
+                    "newsId": {
+                      "type": "string",
+                      "example": "68c2aeccd0921c79b4106e13"
+                    },
+                    "text": {
+                      "type": "string",
+                      "example": "This is a great news article!"
+                    },
+                    "user": {
+                      "type": "object",
+                      "properties": {
+                        "username": {
+                          "type": "string",
+                          "example": "nareshprajapati"
+                        },
+                        "role": {
+                          "type": "string",
+                          "example": "visitor"
+                        }
+                      }
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "example": "2025-09-12T12:30:00.000Z"
+                    }
+                  }
+                }
+              },
+              "text/plain": {
+                "schema": {
+                  "type": "string",
+                  "example": "{\"commentId\":\"64f8c5b9a9b2f3e2d1234567\",\"newsId\":\"68c2aeccd0921c79b4106e13\",\"text\":\"This is a great news article!\",\"user\":{\"username\":\"nareshprajapati\",\"role\":\"visitor\"},\"createdAt\":\"2025-09-12T12:30:00.000Z\"}"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized or invalid token"
+          },
+          "404": {
+            "description": "News not found"
+          },
+          "400": {
+            "description": "Invalid request"
+          }
+        }
+      }
+    }
+  }
+}
