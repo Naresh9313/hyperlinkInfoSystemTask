@@ -1,0 +1,14 @@
+const statusCode = {
+    SUCCESS: 200,
+    INTERNAL_SERVER_ERROR: 500,
+    NOT_FOUND: 404,
+    UNAUTHORIZED: 401,
+    INACTIVE: 403,
+    VALIDATION_ERROR: 400,
+    DUPLICATED_VALUE:409,
+    INTERNAL_ERROR:500,
+    BAD_REQUEST:400,
+    FORBIDDEN:403
+};
+
+export default statusCode
