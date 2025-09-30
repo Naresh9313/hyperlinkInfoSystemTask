@@ -1,0 +1,210 @@
+Task 1
+--------------------------------------
+Setup Node Project with Nodemon , Express, Environment File create APIs get/post User schema Id,Name,Email
+
+
+Task 2 : Simple File Writer & Reader
+---------------------------------
+ * Create a Node.js program that: (Use "fs" package) 
+ 1. Writes some text into a file.
+ 2. Reads the file content and prints it in the console.
+ 3. Appends extra text to the same file.
+ - Prepare three separate Apis for Above task, Add dynamic content in file via postman Api call
+ 
+
+ : Random Joke Generator
+-----------------------------
+ * Create a Node.js program that:
+ 1. Stores a list of jokes in an array.
+ 2. Picks one at random each time you run the program. (via Random pick from array)
+ 3. Displays it in the console. (fetch list of that array)
+ - Prepare three separate Apis for Above task, Add dynamic content in file via postman Api call
+ 
+
+Task3
+----------------------------------------------------------------------------------------------------------------
+Today's Task:
+ 
+* Tasks:
+User Module:
+    1. create user
+       => Fields: id, name, email, password(store in encrypted format), phone_no, address, gender, company_name, status,is_deleted, created_at, updated_at
+    2. update user 
+        => Update user details by id
+    3. delete user 
+        => Soft delete or permanent delete by id.
+    4. list all users with pagination
+        => page and limit.
+    5. Get user details by id
+        => Retrieve a single user by id.
+    6. Search and Filter Users 
+        => Search users by name or email.
+ 
+        => Can be combined with the all-users list API or created as a separate endpoint with pagination (page & limit).
+ 
+    7. Login user
+        => Validate email/username and password.
+ 
+        => If match → success message.
+ 
+        => Otherwise → error message.
+ 
+Post Module:
+    1. create post
+        => Fields: id,user_id(foreign key), title, content, status, is_deleted,created_at, updated_at
+    2. update post 
+        => Update post details by id.
+    3. delete post 
+        => Soft delete or permanent delete by id.
+    4. list all posts with pagination
+        => page and limit.
+    5. Get other user's posts with pagination
+        => Retrieve posts of other users with pagination.
+    6. Get my posts with pagination
+        => Retrieve posts created by the logged-in user with pagination.
+    7. Post like-dislike
+        => Allow users to like or dislike a post.
+    8. Post comment add
+        => Add a comment to a post.
+    9. Post comment edit
+        => Edit a comment by its id.
+    10. Post comment delete
+        => Delete a comment by its id.
+    11. Post comment list 
+        => List all comments for a post.
+
+
+Task 4
+--------------------------------------------
+1)Setup new Project with sequelizer, Migration,seeder (Mongoose database not requirement)
+
+
+Task 5
+-----------------------------------------------------------
+Today's Tasks:
+ 
+1. Set up a new project with a clean structure
+ 
+2. Configure Sequelize (using migrations, seeders, and models) or set up a models structure (if using MongoDB)
+ 
+3. Create the following APIs:
+ 
+	Signup
+Fields: login_type, social_id, login_type [N, F, G, A], first_name, last_name, email, password, country_code, phone, dob, gender, latitude, longitude, profile_image, last_login, login_status, status, ip, app_version, is_deleted, createdAt, updatedAt
+ 
+	Login
+ 
+	Logout (with token)
+ 
+	Get User Profile (with token)
+ 
+	Get Country List (without token)
+ 
+	Import countries via a seeder
+
+
+Task 6
+--------------------------------------------------------
+Prepare below Apis for the above Figma link:
+ 
+Signup
+ 
+Login
+ 
+Forgot Password with mail send
+ 
+Reset Password
+ 
+Logout
+ 
+Get Cities (with filter + pagination)
+ 
+Set User City
+ 
+Get Categories
+ 
+Add News
+ 
+Get News List (with pagination + filter)
+ 
+Get Single News Details
+ 
+Like/Dislike News
+ 
+Add News Comment
+ 
+Get Profile
+ 
+Update Profile (with role change)
+ 
+Reporter – My News List (with pagination + filter)
+ 
+NOTE : 
+	- total_likes_count, total_comments_count (Manage by trigger) in news table
+	- Get relational data using Associations
+
+
+
+
+Task 7
+---------------------------------------------------------
+https://www.figma.com/design/WHws7RCE9St6Mbwz8XSKbz/Food-Delivery-App--Community---Copy-?node-id=0-1&p=f&t=PVl0wceZlKirJ8bu-0
+signup,
+register,
+get profile
+update profile,
+forgot password,
+reset password,
+role: user,chef,
+add shop,update shop,delete shop
+add category,update category,delete category,
+add item,delete item,update item,
+add cart,get cart,delete cart,
+add order,cancel order,place order,manage order(chef)
+
+
+
+
+Task 8
+--------------------------------------------------------
+https://www.figma.com/design/jg8Z7pnvHw3kxX62yspFoF/Online-Groceries-App-UI--Community---Copy-?node-id=1-2&p=f
+signup,
+register,
+get profile
+update profile,
+forgot password,
+reset password with mobile number,
+role: user,
+add category,update category,delete category,
+add product,delete prouct,update product,
+add cart,get cart,delete cart,
+add order,cancel order,place order,manage order,
+checkout,
+add favourite,
+
+
+
+
+
+Practical Task
+-------------------------------------------------
+Prepare the following APIs in Figma:
+ 
+ 
+1.Add doctors via Seeders with category
+ 
+2.Signup
+ 
+3.Login
+ 
+4.Get Profile
+ 
+5.Get all categories
+ 
+6.Get all doctors (apply filter if category selected) with pagination
+ 
+7.Doctor details
+ 
+8.Add doctor to favourite
+ 
+9.Book doctor appointment with date & time
